@@ -3,6 +3,7 @@
 
 ; Map LWin to Escape, then swap Escape with Caps Lock (using scan codes to avoid conflicts)
 LWin::Send "{Escape}"        ; Left Windows key = Escape
+RCtrl::LWin     
 CapsLock::Escape             ; Caps Lock = Escape
 Escape::CapsLock             ; Escape = Caps Lock
 
