@@ -1,0 +1,437 @@
+" =============================================================================
+" IdeaVim Configuration - Organized by Functionality
+" =============================================================================
+
+" Source default vimrc
+source ~/.vimrc
+
+" =============================================================================
+" Basic Settings
+" =============================================================================
+set scrolloff=5
+set incsearch
+set ignorecase
+set smartcase
+set multiple-cursors
+set clipboard+=unnamed
+set ideajoin
+set ideaput
+set relativenumber
+set number
+set surround
+set highlightedyank
+set idearefactormode=keep
+set showmode
+set NERDTree
+set ReplaceWithRegister
+set commentary
+set textobj-entire
+set which-key
+set hlsearch
+set foldmethod=indent
+set foldlevelstart=99
+
+" =============================================================================
+" Plugin Configuration
+" =============================================================================
+" Enable IdeaVim plugins
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-scripts/ReplaceWithRegister'
+"Plug 'justinmk/vim-sneak'
+
+" Highlightedyank settings
+let g:highlightedyank_highlight_duration = "5000"
+let g:highlightedyank_highlight_color = "rgba(57, 62, 65, 255)"
+
+" =============================================================================
+" Basic Mappings
+" =============================================================================
+" Leader key configuration
+let mapleader = " "
+noremap <SPACE> <Nop>
+
+" Essential navigation go to start or end and change auto to Insert Mode (remove i to remove auto insert)
+"nnoremap L $i
+"nnoremap H ^i
+"vnoremap L $i
+"vnoremap H ^i
+
+" Quick escape mappings
+imap jk <ESC>
+imap kj <ESC>
+"nnoremap <C-c> <Esc>
+xnoremap <Esc> <Esc>
+"xnoremap <C-c> <Esc>
+vnoremap <Esc> <Esc>
+"vnoremap <C-c> <Esc>
+
+" Line operations
+nmap zj o<ESC>k
+nmap zk O<ESC>j
+
+" Delete inner word and enter insert mode
+nnoremap diw diwi
+
+nnoremap gl G$b
+
+" =============================================================================
+" Clipboard Operations
+" =============================================================================
+vmap <leader>yiw "+yiw
+nmap <leader>yiw "+yiw
+vmap <leader>y "+y
+vmap <leader>d "_d
+nmap <leader>y "+yy
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
+
+" Show copy history
+nmap <leader>hc :action PasteMultiple<CR>
+
+" =============================================================================
+" Navigation & Search
+" =============================================================================
+" Scrolling
+"nmap <leader>d <C-d>
+"nmap <leader>u <C-u>
+"vmap <leader>d <C-d>
+"vmap <leader>u <C-u>
+" Scroll down (half page) and center - using different key since D is for delete
+nmap D <C-d>zz
+nmap S <C-u>zz
+vmap D <C-d>zz
+vmap S <C-u>zz
+
+
+
+" Tab navigation
+"nnoremap <TAB> :action PreviousTab<CR>
+"nnoremap <S-TAB> :action NextTab<CR>
+"nnoremap <C-h> :action PreviousTab<CR>
+"nnoremap <C-l> :action NextTab<CR>
+nnoremap H :action PreviousTab<CR>
+nnoremap L :action NextTab<CR>
+
+" Window navigation
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+
+nnoremap <leader>a :action JumpToLastWindow<CR>
+
+"nmap <C-o> <Action>(Back)
+"nmap <C-i> <Action>(Forward)
+nmap <C-p> <Action>(Back)
+nmap <C-n> <Action>(Forward)
+" Window resizing shortcuts
+" Ctrl-Shift-J to decrease window height
+nmap <C-S-J> <Action>(StretchSplitToBottom)
+
+" Ctrl-Shift-H to increase window height
+nmap <C-S-K> <Action>(StretchSplitToTop)
+
+" Method navigation
+nnoremap ]] :action MethodDown<CR>
+nnoremap [[ :action MethodUp<CR>
+
+" Search functionality
+"nmap <leader>fp :action FindInPath<CR>
+"vmap <leader>fp :action FindInPath<CR>
+
+" Find in project
+nmap /fp :action FindInPath<CR>
+vmap /fp :action FindInPath<CR>
+
+map <leader>fe :action SearchEverywhere<CR>
+
+
+vnoremap // :action Find<CR>
+nnoremap // :action Find<CR>
+
+
+
+
+"" Find fuzzy
+"map <Leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
+map <Leader>gf <action>(com.mituuz.fuzzier.Fuzzier)
+"map <Leader>mf <action>(com.mituuz.fuzzier.FuzzyMover)
+map <Leader>gv <action>(com.mituuz.fuzzier.FuzzierVCS)
+map <Leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
+
+" =============================================================================
+" Code Navigation & Information
+" =============================================================================
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap c[ :action JumpToLastChange<CR>
+nnoremap c] :action JumpToNextChange<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gc :action GotoClass<CR>
+nmap <leader>gi :action GotoSymbol<CR>
+" Use fz instead
+" nnoremap <leader>gf :action GotoFile<CR>
+nnoremap gt :action GotoTest<CR>
+" Code information
+nnoremap <leader>i :action ShowHoverInfo<CR>
+nnoremap <leader>d :action ShowErrorDescription<CR>
+nnoremap <leader>pi :action ParameterInfo<CR>
+nmap qd <Action>(QuickJavaDoc)
+nmap qi <Action>(QuickImplementations) "--
+nnoremap U :action FindUsages<CR>
+
+nnoremap <leader>iv :action IntroduceVariable<CR>
+nnoremap <leader>em :action ExtractMethod<CR>
+nnoremap <leader>ic :action IntroduceConstant<CR>
+
+" Comments
+nnoremap gcc :action CommentByLineComment<CR>
+vnoremap gcc :action CommentByLineComment<CR>
+" Comment paragraph
+nnoremap gcap vap:action CommentByLineComment<CR>
+nnoremap gcip vip:action CommentByLineComment<CR>
+
+vnoremap gcC :action CommentByBlockComment<CR>
+nnoremap gcC :action CommentByBlockComment<CR>
+
+" =============================================================================
+" Window Management
+" =============================================================================
+map <leader>su <Action>(Unsplit)
+map <leader>hsp <Action>(SplitHorizontally)
+map <leader>vsp <Action>(SplitVertically)
+nmap sm <Action>(MaximizeEditorInSplit)
+nnoremap so :action MoveEditorToOppositeTabGroup<CR>
+nnoremap <leader>sc :action UnsplitAll<CR>
+nnoremap <leader>v :action NextSplitter<CR>
+
+"nnoremap  :action CloseContent<CR>
+" Use 'x' to close the current window in normal and visual mode
+"nnoremap X :action CloseContent<CR>
+"vnoremap X :action CloseContent<CR>
+"<C-S-o> same to laod vim changes
+nnoremap <C-S-a> :action CloseAllEditors<CR>
+" Close other tabs
+nnoremap <C-S-o> :tabonly<CR>
+
+" =============================================================================
+" Tool Windows & UI
+" =============================================================================
+" NERDTree
+map <leader>e :NERDTreeToggle<CR>
+
+" Terminal
+"nnoremap <S-a> :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+
+" Display options
+map <leader>dd <action>(ToggleDistractionFreeMode)
+map <leader>dz <action>(ToggleZenMode)
+map <leader>df <action>(ToggleFullScreen) nnoremap <leader>dw :action HideAllWindows<CR>
+
+" =============================================================================
+" Running & Debugging
+" =============================================================================
+nnoremap <Leader>d :action Debug<CR>
+nnoremap <Leader>s :action Stop<CR>
+nnoremap <leader>r :action Run<CR>
+nnoremap <Leader>rc :action RunClass<CR>
+
+" =============================================================================
+" Debugging Step Actions
+" =============================================================================
+" Step over
+nnoremap <leader>ds :action StepOver<CR>
+
+" Step into
+nnoremap <leader>di :action StepInto<CR>
+
+" Step out
+nnoremap <leader>do :action StepOut<CR>
+
+" Run to cursor
+nnoremap <leader>dc :action Debugger.RunToCursor<CR>
+
+" Force run to cursor
+nnoremap <leader>df :action Debugger.ForceRunToCursor<CR>
+
+" Resume program execution
+nnoremap <leader>dr :action Resume<CR>
+
+" Toggle breakpoint at the current line
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+
+" Evaluate expression during debugging
+nnoremap <leader>de :action EvaluateExpression<CR>
+
+" View watches during debugging
+nnoremap <leader>dw :action ViewWatches<CR>
+
+" =============================================================================
+" Project Management
+" =============================================================================
+nmap <leader>]p :action NextProjectWindow<CR>
+noremap <leader>[p :action PreviousProjectWindow<CR>
+
+" =============================================================================
+" Version Control
+" =============================================================================
+nmap ]v <Action>(VcsShowNextChangeMarker)
+nmap [v <Action>(VcsShowPrevChangeMarker)
+
+nnoremap <leader>vlc :action LocalHistory.ShowHistory<CR>
+" View recent changes
+nmap <leader>vc :action RecentChanges<CR>
+
+
+" =============================================================================
+" Error Navigation
+" =============================================================================
+map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
+map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
+nmap ]e <Action>(GotoNextError)
+nmap [e <Action>(GotoPreviousError)
+
+
+" =============================================================================
+" Folding
+" =============================================================================
+nnoremap <leader>za za
+nnoremap <leader>zo zo
+map <leader>fa :action CollapseAllRegions<CR>
+map <leader>fA :action ExpandAllRegions<CR>
+
+
+" =============================================================================
+" File Creation and Management
+" =============================================================================
+" Create new class
+nnoremap <leader>nc :action NewClass<CR>
+
+" Create new package
+nnoremap <leader>np :action NewPackage<CR>
+
+" File templates
+nnoremap <leader>nt :action NewFromTemplate<CR>
+
+nnoremap <leader>fr :action RecentFiles<CR>
+
+" =============================================================================
+" Type Information
+" =============================================================================
+" Show type info for the expression under the cursor
+nnoremap <leader>th :action ShowHoverInfo<CR>
+
+
+" =============================================================================
+" Call Hierarchy
+" =============================================================================
+" Show call hierarchy for the method under the cursor
+nnoremap <leader>ch :action CallHierarchy<CR>
+
+" =============================================================================
+" Recent Locations
+" =============================================================================
+" Show recent locations popup
+nnoremap <leader>rl :action RecentLocations<CR>
+
+
+" formatting
+nnoremap cf :action ReformatCode <CR>
+vnoremap cf :action ReformatCode <CR>
+nnoremap cr :action RenameElement <CR>
+vnoremap cr :action RenameElement <CR>
+nnoremap cR :action RenameFile <CR>
+vnoremap cR :action RenameFile <CR>
+
+" Refactoring
+" map <leader>rn <Action>(RenameElement)
+" map <leader>rm <Action>(ExtractMethod)
+" map <leader>rv <Action>(IntroduceVariable)
+" map <leader>rf <Action>(IntroduceField)
+map <leader>cs <Action>(ChangeSignature)
+map <leader>qr <Action>(Refactorings.QuickListPopupAction)
+
+
+" formatting
+nnoremap cf :action ReformatCode <CR>
+vnoremap cf :action ReformatCode <CR>
+nnoremap cr :action RenameElement <CR>
+vnoremap cr :action RenameElement <CR>
+nnoremap cR :action RenameFile <CR>
+vnoremap cR :action RenameFile <CR>
+
+nnoremap cv :action IntroduceVariable <CR>
+vnoremap cv :action IntroduceVariable <CR>
+" Extract Method
+nnoremap cm :action ExtractMethod<CR>
+vnoremap cm :action ExtractMethod<CR>
+nnoremap cs :action ChangeSignature <CR>
+vnoremap cs :action ChangeSignature <CR>
+nnoremap cR :action IntroduceField <CR>
+vnoremap cR :action IntroduceField <CR>
+
+nnoremap cm :action ExtractMethod <CR>
+vnoremap cm :action ExtractMethod <CR>
+
+" Refactoring
+map <leader>qr <Action>(Refactorings.QuickListPopupAction)
+
+
+" =============================================================================
+" Bookmarks
+" =============================================================================
+" Toggle bookmark with mnemonic
+nmap mm <Action>(ToggleBookmark)
+" Toggle bookmark with numbering
+nmap mq <Action>(ToggleBookmark1)
+nmap mw <Action>(ToggleBookmark2)
+nmap me <Action>(ToggleBookmark3)
+nmap mr <Action>(ToggleBookmark4)
+nmap mt <Action>(ToggleBookmark5)
+nmap my <Action>(ToggleBookmark6)
+
+nmap gmq <Action>(GotoBookmark1)
+nmap gmw <Action>(GotoBookmark2)
+nmap gme <Action>(GotoBookmark3)
+nmap gmr <Action>(GotoBookmark4)
+nmap gmt<Action>(GotoBookmark5)
+nmap gmy <Action>(GotoBookmark6)
+" Move Between Bookmarks (Global):
+nmap ]b <Action>(GotoNextBookmark)
+nmap [b <Action>(GotoPreviousBookmark)
+
+
+" Remove all bookmarks
+nmap <leader>bx <Action>(BookmarksView.ClearBookmarks)
+
+nnoremap <leader>ww :action HideAllWindows <CR>
+" Bonus: Toggle project view (useful companion mapping)
+nnoremap <silent> <leader>ew :action ActivateProjectToolWindow<CR>
+
+" Show all bookmarks
+nmap <leader>sb :action ShowBookmarks<CR>
+
+" First hide all windows, then ensure editor focus
+nnoremap <leader>we :action HideAllWindows<CR>
+
+
+
+" First hide all windows, then ensure editor focus
+" nnoremap <leader>we :action HideAllWindows<CR>
+
+
+
+" Use IDE handlers for common shortcuts
+sethandler <C-X> a:ide
+sethandler <C-C> a:ide
+sethandler <C-V> a:ide
+sethandler <C-A> a:ide
+sethandler <C-/> a:ide
+
+
