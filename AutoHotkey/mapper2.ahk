@@ -27,11 +27,17 @@ RAlt & j::Send "{Down}"      ; AltGr+j = ↓
 RAlt & k::Send "{Up}"        ; AltGr+k = ↑
 RAlt & l::Send "{Right}"     ; AltGr+l = →
 RAlt & m::Send "@" 
-; Bottom Row
-RAlt & x::Send "{Delete}"    ; AltGr+x = Delete
-RAlt & b::Send "{Backspace}" ; AltGr+b = Backspace
+
+; esp dist
 RAlt & n::Send "ñ"           ; AltGr+n = ñ
 
-; Word-based editing (Ctrl combinations)
-RAlt & c::Send "^{Delete}"   ; AltGr+c = Ctrl+Delete (delete word forward)
-RAlt & v::Send "^{Backspace}" ; AltGr+v = Ctrl+Backspace (delete word backward)
+; delete like vim 
+
+>!x::Send("{Delete}")
+>!+x::Send("{Backspace}")
+>!v::Send("{RCtrl down}{Delete}{RCtrl up}")
+>!+v::Send("{RCtrl down}{Backspace}{RCtrl up}")
+
+
+
+
