@@ -12,19 +12,40 @@ set scrolloff=5
 set incsearch
 set ignorecase
 set smartcase
-set multiple-cursors
-set clipboard+=unnamed
+set multiple-cursors  " <A-n>, <A-x>, <A-p>
+set clipboard=unnamed,unnamedplus
+"set clipboard+=unnamed
 set ideajoin
 set ideaput
 set relativenumber
 set number
-set surround
+" ysiw"    " Surround inner word with quotes: word → "word"
+" ysip}    " Surround inner paragraph with braces
+" yss"     " Surround entire line with quotes
+set surround " Enable surround text objects (ys, cs, ds)
 set highlightedyank
 set idearefactormode=keep
 set showmode
 set NERDTree
+" yiw         " First, yank a word (copies to register)
+" griw        " Replace current word with yanked content
+" grr         " Replace entire line with yanked content
+" gr$         " Replace from cursor to end of line
+" kgrip        " Replace inner paragraph with yanked content
+" kgr2j        " Replace current line and 2 lines below
 set ReplaceWithRegister
+" gcc     " Toggle comment on current line
+" gc2j    " Comment current line and 2 lines below
+" gcip    " Comment inner paragraph
+" gcap    " Comment around paragraph (includes blank lines)
+" gcG     " Comment from cursor to end of fileI
 set commentary
+" yae    " Yank entire file content
+" dae    " Delete entire file content
+" cae    " Change entire file (delete all and enter insert mode)
+" =ae    " Indent entire file
+" gqae   " Format entire file
+" vae    " Visual select entire file
 set textobj-entire
 set which-key
 set hlsearch
@@ -76,23 +97,25 @@ nmap zk O<ESC>j
 " Delete inner word and enter insert mode
 nnoremap diw diwi
 
-nnoremap gl G$b
+
+"nnoremap gl G$b
 
 " =============================================================================
 " Clipboard Operations
 " =============================================================================
-vmap <leader>yiw "+yiw
-nmap <leader>yiw "+yiw
-vmap <leader>y "+y
-vmap <leader>d "_d
-nmap <leader>y "+yy
-nmap <leader>p "+p
-nmap <leader>P "+P
-vmap <leader>p "+p
-vmap <leader>P "+P
+"vmap <leader>yiw "+yiw
+"nmap <leader>yiw "+yiw
+"vmap <leader>y "+y
+"vmap <leader>d "_d
+"nmap <leader>y "+yy
+"nmap <leader>p "+p
+"nmap <leader>P "+P
+"vmap <leader>p "+p
+"vmap <leader>P "+P
+nnoremap yyc :action EditorDuplicate<CR>k:action CommentByLineComment<CR>j
 
 " Show copy history
-nmap <leader>hc :action PasteMultiple<CR>
+"nmap <leader>hc :action PasteMultiple<CR>
 
 " =============================================================================
 " Navigation & Search
@@ -103,14 +126,14 @@ nmap <leader>hc :action PasteMultiple<CR>
 "vmap <leader>d <C-d>
 "vmap <leader>u <C-u>
 " Scroll down (half page) and center - using different key since D is for delete
-nmap D <C-d>zz
-nmap S <C-u>zz
-vmap D <C-d>zz
-vmap S <C-u>zz
+nnoremap D <C-d>zz
+nnoremap S <C-u>zz
+vnoremap D <C-d>zz
+vnoremap S <C-u>zz
+
+nnoremap Q d$
 
 
-
-" Tab navigation
 "nnoremap <TAB> :action PreviousTab<CR>
 "nnoremap <S-TAB> :action NextTab<CR>
 "nnoremap <C-h> :action PreviousTab<CR>
@@ -119,16 +142,18 @@ nnoremap H :action PreviousTab<CR>
 nnoremap L :action NextTab<CR>
 
 " Window navigation
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
+nnoremap <S-k> <C-w>k
+nnoremap <S-j> <C-w>j
 
 
-nnoremap <leader>a :action JumpToLastWindow<CR>
+
+"fix
+"nnoremap <leader>w :action JumpToLastWindow<CR>
 
 "nmap <C-o> <Action>(Back)
 "nmap <C-i> <Action>(Forward)
-nmap <C-p> <Action>(Back)
-nmap <C-n> <Action>(Forward)
+nmap <S-p> <Action>(Back)
+nmap <S-n> <Action>(Forward)
 " Window resizing shortcuts
 " Ctrl-Shift-J to decrease window height
 nmap <C-S-J> <Action>(StretchSplitToBottom)
@@ -156,12 +181,16 @@ nnoremap // :action Find<CR>
 
 
 
-
+" First hide all windows, then ensure editor focus
+nnoremap EE :action ActivateProjectToolWindow<CR>
+"find with /
+nnoremap fs :action FileStructurePopup<CR>
+nnoremap fr :action RecentFiles<CR>
 "" Find fuzzy
 "map <Leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
-map <Leader>gf <action>(com.mituuz.fuzzier.Fuzzier)
+map ff <action>(com.mituuz.fuzzier.Fuzzier)
 "map <Leader>mf <action>(com.mituuz.fuzzier.FuzzyMover)
-map <Leader>gv <action>(com.mituuz.fuzzier.FuzzierVCS)
+map fvc <action>(com.mituuz.fuzzier.FuzzierVCS)
 map <Leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
 
 " =============================================================================
@@ -169,8 +198,10 @@ map <Leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
 " =============================================================================
 nnoremap gs :action GotoSuperMethod<CR>
 nnoremap gi :action GotoImplementation<CR>
-nnoremap c[ :action JumpToLastChange<CR>
-nnoremap c] :action JumpToNextChange<CR>
+nnoremap [c :action JumpToLastChange<CR>
+nnoremap ]c :action JumpToNextChange<CR>
+
+
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gc :action GotoClass<CR>
 nmap <leader>gi :action GotoSymbol<CR>
@@ -217,7 +248,11 @@ nnoremap <leader>v :action NextSplitter<CR>
 "<C-S-o> same to laod vim changes
 nnoremap <C-S-a> :action CloseAllEditors<CR>
 " Close other tabs
-nnoremap <C-S-o> :tabonly<CR>
+"nnoremap <C-S-o> :tabonly<CR>
+
+" Close other tabs
+nnoremap <S-x> :tabonly<CR>
+
 
 " =============================================================================
 " Tool Windows & UI
@@ -232,15 +267,18 @@ nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
 map <leader>dz <action>(ToggleZenMode)
-map <leader>df <action>(ToggleFullScreen) nnoremap <leader>dw :action HideAllWindows<CR>
+map <leader>df <action>(ToggleFullScreen)
+"nnoremap <leader>dw :action HideAllWindows<CR>
 
 " =============================================================================
 " Running & Debugging
 " =============================================================================
-nnoremap <Leader>d :action Debug<CR>
-nnoremap <Leader>s :action Stop<CR>
+nnoremap <leader>d :action Debug<CR>
+nnoremap <leader>s :action Stop<CR>
 nnoremap <leader>r :action Run<CR>
-nnoremap <Leader>rc :action RunClass<CR>
+nnoremap <leader>R :action RunClass<CR>
+
+
 
 " =============================================================================
 " Debugging Step Actions
@@ -275,14 +313,15 @@ nnoremap <leader>dw :action ViewWatches<CR>
 " =============================================================================
 " Project Management
 " =============================================================================
-nmap <leader>]p :action NextProjectWindow<CR>
-noremap <leader>[p :action PreviousProjectWindow<CR>
+" work fine with familly ide
+nmap ]p :action NextProjectWindow<CR>
+noremap [p :action PreviousProjectWindow<CR>
 
 " =============================================================================
 " Version Control
 " =============================================================================
-nmap ]v <Action>(VcsShowNextChangeMarker)
-nmap [v <Action>(VcsShowPrevChangeMarker)
+"nmap ]v <Action>(VcsShowNextChangeMarker)
+"nmap [v <Action>(VcsShowPrevChangeMarker)
 
 nnoremap <leader>vlc :action LocalHistory.ShowHistory<CR>
 " View recent changes
@@ -292,8 +331,8 @@ nmap <leader>vc :action RecentChanges<CR>
 " =============================================================================
 " Error Navigation
 " =============================================================================
-map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
-map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
+"map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
+"map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
 nmap ]e <Action>(GotoNextError)
 nmap [e <Action>(GotoPreviousError)
 
@@ -319,7 +358,9 @@ nnoremap <leader>np :action NewPackage<CR>
 " File templates
 nnoremap <leader>nt :action NewFromTemplate<CR>
 
-nnoremap <leader>fr :action RecentFiles<CR>
+
+
+"nnoremap <leader>fr :action RecentFiles<CR>
 
 " =============================================================================
 " Type Information
@@ -338,12 +379,17 @@ nnoremap <leader>ch :action CallHierarchy<CR>
 " Recent Locations
 " =============================================================================
 " Show recent locations popup
+"nav
 nnoremap <leader>rl :action RecentLocations<CR>
 
+" Indentación
+nnoremap <leader>i= :action ReformatCode<CR>
+nnoremap <leader>io :action OptimizeImports<CR>
+vnoremap <leader>i= :action ReformatCode<CR>
 
 " formatting
-nnoremap cf :action ReformatCode <CR>
-vnoremap cf :action ReformatCode <CR>
+"nnoremap cf :action ReformatCode <CR>
+"vnoremap cf :action ReformatCode <CR>
 nnoremap cr :action RenameElement <CR>
 vnoremap cr :action RenameElement <CR>
 nnoremap cR :action RenameFile <CR>
@@ -406,19 +452,20 @@ nmap gmy <Action>(GotoBookmark6)
 nmap ]b <Action>(GotoNextBookmark)
 nmap [b <Action>(GotoPreviousBookmark)
 
-
-" Remove all bookmarks
-nmap <leader>bx <Action>(BookmarksView.ClearBookmarks)
-
-nnoremap <leader>ww :action HideAllWindows <CR>
-" Bonus: Toggle project view (useful companion mapping)
-nnoremap <silent> <leader>ew :action ActivateProjectToolWindow<CR>
-
 " Show all bookmarks
-nmap <leader>sb :action ShowBookmarks<CR>
+"nmap <leader>sb :action ShowBookmarks<CR>
+nmap Bs :action ShowBookmarks<CR>
 
-" First hide all windows, then ensure editor focus
-nnoremap <leader>we :action HideAllWindows<CR>
+"nnoremap <leader>ww :action HideAllWindows <CR>
+nnoremap zz :action HideAllWindows <CR>
+" Bonus: Toggle project view (useful companion mapping)
+"nnoremap <silent> <leader>ew :action ActivateProjectToolWindow<CR>
+
+
+
+
+
+
 
 
 
@@ -433,5 +480,49 @@ sethandler <C-C> a:ide
 sethandler <C-V> a:ide
 sethandler <C-A> a:ide
 sethandler <C-/> a:ide
+sethandler <C-S-x> a:vm
+
+" new function
+
+nnoremap su :action ShowUsages<CR>
+nnoremap <leader>hi :action HighlightUsagesInFile<CR>
 
 
+
+nnoremap <leader>gb :action Git.Branches<CR>
+
+
+" Quick Actions
+nnoremap <leader>qf :action QuickFix<CR>
+nnoremap <leader>ai :action ShowIntentionActions<CR>
+nnoremap ca :action ShowContextActions<CR>
+
+" Diff shortcuts
+nnoremap <leader>dd :action Diff.ShowDiff<CR>
+nnoremap <leader>dh :action Compare.LastVersion<CR>
+nnoremap <leader>dp :action Compare.Selected<CR>
+nnoremap <leader>dt :action Vcs.ShowTabbedFileHistory<CR>
+
+" Mover líneas
+nnoremap <A-j> :action MoveLineDown<CR>
+nnoremap <A-k> :action MoveLineUp<CR>
+vnoremap <A-j> :action MoveLineDown<CR>
+vnoremap <A-k> :action MoveLineUp<CR>
+
+" Edición múltiple
+nnoremap <leader>mn :action SelectNextOccurrence<CR>
+nnoremap <leader>mp :action UnselectPreviousOccurrence<CR>
+nnoremap <leader>ma :action SelectAllOccurrences<CR>
+
+
+
+
+nnoremap <C-w>t :action ActivateTerminalToolWindow<CR>
+nnoremap <C-w>r :action ActivateRunToolWindow<CR>
+nnoremap <C-w>d :action ActivateDebugToolWindow<CR>
+
+" Enhanced marks
+
+
+" Quick access to specific files
+nnoremap <leader>fp :action ManageRecentProjects<CR>

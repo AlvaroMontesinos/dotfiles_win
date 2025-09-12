@@ -35,8 +35,8 @@ RAlt & n::Send "ñ"           ; AltGr+n = ñ
 
 >!x::Send("{Delete}")
 >!+x::Send("{Backspace}")
->!v::Send("{RCtrl down}{Delete}{RCtrl up}")
->!+v::Send("{RCtrl down}{Backspace}{RCtrl up}")
+>!+v::Send("{RCtrl down}{Delete}{RCtrl up}")
+>!v::Send("{RCtrl down}{Backspace}{RCtrl up}")
 
 
 
