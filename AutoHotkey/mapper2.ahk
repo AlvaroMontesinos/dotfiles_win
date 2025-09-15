@@ -1,10 +1,12 @@
 ﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 
+; Update 15
 ; Other key remappings
 RCtrl::LWin     
-CapsLock::Escape             ; Caps Lock = Escape
+LWin::Escape
 Escape::CapsLock             ; Escape = Caps Lock
+
 
 ; QWERTY Row with RAlt
 RAlt & q::Send "~"          ; AltGr+q = ! (fixed with braces)
@@ -37,7 +39,6 @@ RAlt & n::Send "ñ"           ; AltGr+n = ñ
 >!+x::Send("{Backspace}")
 >!+v::Send("{RCtrl down}{Delete}{RCtrl up}")
 >!v::Send("{RCtrl down}{Backspace}{RCtrl up}")
-
 
 
 
