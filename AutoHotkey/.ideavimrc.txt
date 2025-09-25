@@ -1,5 +1,5 @@
 " =============================================================================
-" IdeaVim Configuration - Organized by Functionality 25092025
+" IdeaVim Configuration - Organized by Functionality
 " =============================================================================
 
 " Source default vimrc
@@ -262,6 +262,7 @@ nnoremap <C-S-a> :action CloseAllEditors<CR>
 " Close other tabs
 "nnoremap <C-S-o> :tabonly<CR>
 
+
 " Close other tabs
 nnoremap <S-x> :tabonly<CR>
 
@@ -270,7 +271,10 @@ nnoremap <S-x> :tabonly<CR>
 " Tool Windows & UI
 " =============================================================================
 " NERDTree
-map <leader>e :NERDTreeToggle<CR>
+map <Esc> :NERDTreeClose<CR>
+" Close NERDTree with Escape in normal and visual mode
+"autocmd FileType nerdtree nnoremap <buffer> <Esc> :NERDTreeClose<CR>
+"autocmd FileType nerdtree vnoremap <buffer> <Esc> :NERDTreeClose<CR>
 
 " Terminal
 "nnoremap <S-a> :action ActivateTerminalToolWindow<CR>
@@ -476,8 +480,6 @@ nmap Bs :action ShowBookmarks<CR>
 nnoremap zz :action HideAllWindows <CR>
 " Bonus: Toggle project view (useful companion mapping)
 "nnoremap <silent> <leader>ew :action ActivateProjectToolWindow<CR>
-
-
 
 
 
