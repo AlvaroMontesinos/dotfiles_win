@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdeaVim Configuration Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2c3e50;
+            line-height: 1.4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .section {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h2::before {
+            content: '▶';
+            color: #667eea;
+            font-size: 0.8em;
+        }
+        
+        .mapping {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+            transition: all 0.2s ease;
+        }
+        
+        .mapping:hover {
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .key {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(145deg, #34495e, #2c3e50);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .description {
+            color: #555;
+            font-weight: 500;
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+        
+        .special {
+            border-left-color: #e74c3c;
+        }
+        
+        .special .key {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+        }
+        
+        .navigation {
+            border-left-color: #f39c12;
+        }
+        
+        .navigation .key {
+            background: linear-gradient(145deg, #f39c12, #d68910);
+        }
+        
+        .code {
+            border-left-color: #27ae60;
+        }
+        
+        .code .key {
+            background: linear-gradient(145deg, #27ae60, #229954);
+        }
+        
+        .debug {
+            border-left-color: #9b59b6;
+        }
+        
+        .debug .key {
+            background: linear-gradient(145deg, #9b59b6, #8e44ad);
+        }
+        
+        .leader-note {
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 IdeaVim Configuration Cheatsheet</h1>
+            <p>Essential keyboard shortcuts for productive coding with IdeaVim</p>
+        </div>
+        
+        <div class="leader-note">
+            <strong>Leader Key:</strong> <span class="key">Space</span>
+        </div>
+        
+        <div class="grid">
+            <!-- Essential Mappings -->
+            <div class="section special">
+                <h2>⚡ Essential Mappings</h2>
+                <div class="mapping">
+                    <span class="key">jk / kj</span>
+                    <span class="description">Escape from insert mode</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">H / L</span>
+                    <span class="description">Previous/Next tab</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">D / S</span>
+                    <span class="description">Half-page scroll down/up (centered)</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">Q</span>
+                    <span class="description">Delete to end of line</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">zj / zk</span>
+                    <span class="description">Insert line below/above</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">zz</span>
+                    <span class="description">Hide all tool windows</span>
+                </div>
+            </div>
+
+            <!-- File & Project Navigation -->
+            <div class="section navigation">
+                <h2>📁 File & Project Navigation</h2>
+                <div class="mapping">
+                    <span class="key">ff</span>
+                    <span class="description">Fuzzy file finder</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">fs</span>
+                    <span class="description">File structure popup</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">fr</span>
+                    <span class="description">Recent files</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">fvc</span>
+                    <span class="description">Version control files</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">EE</span>
+                    <span class="description">Toggle project tree</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">//</span>
+                    <span class="description">Find in current file</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">/fp</span>
+                    <span class="description">Find in project</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃W+t/r/d</span>
+                    <span class="description">Terminal/Run/Debug tool window</span>
+                </div>
+            </div>
+
+            <!-- Code Navigation -->
+            <div class="section code">
+                <h2>🧭 Code Navigation & Information</h2>
+                <div class="mapping">
+                    <span class="key">gd</span>
+                    <span class="description">Go to declaration</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gi</span>
+                    <span class="description">Go to implementation</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gc</span>
+                    <span class="description">Go to class</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gt</span>
+                    <span class="description">Go to test</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gs</span>
+                    <span class="description">Go to super method</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">U</span>
+                    <span class="description">Find usages</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">su</span>
+                    <span class="description">Show usages</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">qd / qi</span>
+                    <span class="description">Quick documentation/implementations</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">]] / [[</span>
+                    <span class="description">Next/Previous method</span>
+                </div>
+            </div>
+
+            <!-- Refactoring -->
+            <div class="section code">
+                <h2>🔧 Refactoring (c-prefix)</h2>
+                <div class="mapping">
+                    <span class="key">cr</span>
+                    <span class="description">Rename element</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">cf</span>
+                    <span class="description">Format code</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">cv</span>
+                    <span class="description">Extract variable</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">cm</span>
+                    <span class="description">Extract method</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">cs</span>
+                    <span class="description">Change signature</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">ca</span>
+                    <span class="description">Context actions</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">cR</span>
+                    <span class="description">Rename file</span>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="section">
+                <h2>💬 Comments</h2>
+                <div class="mapping">
+                    <span class="key">gcc</span>
+                    <span class="description">Toggle line comment</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gcC</span>
+                    <span class="description">Toggle block comment</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gcap</span>
+                    <span class="description">Comment around paragraph</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gcip</span>
+                    <span class="description">Comment inner paragraph</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">yyc</span>
+                    <span class="description">Duplicate line and comment original</span>
+                </div>
+            </div>
+
+            <!-- Window Management -->
+            <div class="section">
+                <h2>🪟 Window Management</h2>
+                <div class="mapping">
+                    <span class="key">⌃hsp / ⌃vsp</span>
+                    <span class="description">Split horizontal/vertical</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">sm</span>
+                    <span class="description">Maximize editor</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">so</span>
+                    <span class="description">Move to opposite tab group</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⇧X</span>
+                    <span class="description">Close other tabs</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⇧K / ⇧J</span>
+                    <span class="description">Navigate windows up/down</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⇧P / ⇧N</span>
+                    <span class="description">Back/Forward navigation</span>
+                </div>
+            </div>
+
+            <!-- Debugging -->
+            <div class="section debug">
+                <h2>🐛 Debugging</h2>
+                <div class="mapping">
+                    <span class="key">⌃db</span>
+                    <span class="description">Toggle breakpoint</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">K</span>
+                    <span class="description">Step over</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">\</span>
+                    <span class="description">Step into</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">J</span>
+                    <span class="description">Resume execution</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃r / ⌃R</span>
+                    <span class="description">Run/Run class</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃d</span>
+                    <span class="description">Debug</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃s</span>
+                    <span class="description">Stop</span>
+                </div>
+            </div>
+
+            <!-- Bookmarks -->
+            <div class="section special">
+                <h2>🔖 Bookmarks</h2>
+                <div class="mapping">
+                    <span class="key">mm</span>
+                    <span class="description">Toggle bookmark</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">mq/mw/me/mr/mt/my</span>
+                    <span class="description">Toggle numbered bookmarks (1-6)</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">gmq/gmw/gme/gmr/gmt/gmy</span>
+                    <span class="description">Go to numbered bookmarks</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">]b / [b</span>
+                    <span class="description">Next/Previous bookmark</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">Bs</span>
+                    <span class="description">Show all bookmarks</span>
+                </div>
+            </div>
+
+            <!-- Version Control -->
+            <div class="section">
+                <h2>📊 Version Control & Errors</h2>
+                <div class="mapping">
+                    <span class="key">⌃gb</span>
+                    <span class="description">Git branches</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃vc</span>
+                    <span class="description">Recent changes</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">]e / [e</span>
+                    <span class="description">Next/Previous error</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">[c / ]c</span>
+                    <span class="description">Last/Next change</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">]p / [p</span>
+                    <span class="description">Next/Previous project</span>
+                </div>
+            </div>
+
+            <!-- Utility & Line Operations -->
+            <div class="section">
+                <h2>⚙️ Utility & Line Operations</h2>
+                <div class="mapping">
+                    <span class="key">⌥J / ⌥K</span>
+                    <span class="description">Move lines up/down</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃mn/mp/ma</span>
+                    <span class="description">Select next/previous/all occurrences</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃fe</span>
+                    <span class="description">Search everywhere</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃fg</span>
+                    <span class="description">Fuzzy grep</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃rl</span>
+                    <span class="description">Recent locations</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃hi</span>
+                    <span class="description">Highlight usages in file</span>
+                </div>
+            </div>
+
+            <!-- File Creation -->
+            <div class="section">
+                <h2>📄 File Creation & Management</h2>
+                <div class="mapping">
+                    <span class="key">⌃nc</span>
+                    <span class="description">New class</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃np</span>
+                    <span class="description">New package</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃nt</span>
+                    <span class="description">New from template</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃fp</span>
+                    <span class="description">Manage recent projects</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃e</span>
+                    <span class="description">Toggle NERDTree</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃t</span>
+                    <span class="description">Open terminal</span>
+                </div>
+            </div>
+
+            <!-- Display Modes -->
+            <div class="section">
+                <h2>🎨 Display Modes</h2>
+                <div class="mapping">
+                    <span class="key">⌃dd</span>
+                    <span class="description">Distraction-free mode</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃dz</span>
+                    <span class="description">Zen mode</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃df</span>
+                    <span class="description">Full screen</span>
+                </div>
+                <div class="mapping">
+                    <span class="key">⌃fa / ⌃fA</span>
+                    <span class="description">Collapse/Expand all regions</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

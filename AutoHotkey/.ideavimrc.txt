@@ -1,5 +1,5 @@
 " =============================================================================
-" IdeaVim Configuration - Organized by Functionality
+" IdeaVim Configuration - Organized by Functionality 25092025
 " =============================================================================
 
 " Source default vimrc
@@ -84,6 +84,10 @@ noremap <SPACE> <Nop>
 " Quick escape mappings
 imap jk <ESC>
 imap kj <ESC>
+
+" Add this to your .ideavimrc file
+inoremap <expr> <Tab> search('\%#[]>)}''"`]', 'n') ? '<Right>' : '<Tab>'
+
 "nnoremap <C-c> <Esc>
 xnoremap <Esc> <Esc>
 "xnoremap <C-c> <Esc>
@@ -179,8 +183,6 @@ map <leader>fe :action SearchEverywhere<CR>
 vnoremap // :action Find<CR>
 nnoremap // :action Find<CR>
 
-
-
 " First hide all windows, then ensure editor focus
 nnoremap EE :action ActivateProjectToolWindow<CR>
 "find with /
@@ -201,6 +203,9 @@ nnoremap gi :action GotoImplementation<CR>
 nnoremap [c :action JumpToLastChange<CR>
 nnoremap ]c :action JumpToNextChange<CR>
 
+nmap ]g <Action>(VcsShowNextChangeMarker)
+nmap [g <Action>(VcsShowPrevChangeMarker)
+
 
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gc :action GotoClass<CR>
@@ -213,7 +218,7 @@ nnoremap <leader>i :action ShowHoverInfo<CR>
 nnoremap <leader>d :action ShowErrorDescription<CR>
 nnoremap <leader>pi :action ParameterInfo<CR>
 nmap qd <Action>(QuickJavaDoc)
-nmap qi <Action>(QuickImplementations) "--
+nmap qi <Action>(QuickImplementations)
 nnoremap U :action FindUsages<CR>
 
 nnoremap <leader>iv :action IntroduceVariable<CR>
@@ -223,12 +228,19 @@ nnoremap <leader>ic :action IntroduceConstant<CR>
 " Comments
 nnoremap gcc :action CommentByLineComment<CR>
 vnoremap gcc :action CommentByLineComment<CR>
+
+
 " Comment paragraph
 nnoremap gcap vap:action CommentByLineComment<CR>
 nnoremap gcip vip:action CommentByLineComment<CR>
 
 vnoremap gcC :action CommentByBlockComment<CR>
 nnoremap gcC :action CommentByBlockComment<CR>
+
+
+" Format function with Prettier
+nnoremap cpf :action EditorCodeBlockStart<CR>V:action EditorCodeBlockEnd<CR>:action ReformatWithPrettierAction<CR>
+
 
 " =============================================================================
 " Window Management
@@ -283,14 +295,16 @@ nnoremap <leader>R :action RunClass<CR>
 " =============================================================================
 " Debugging Step Actions
 " =============================================================================
-" Step over
-nnoremap <leader>ds :action StepOver<CR>
+nnoremap K :action StepOver<CR>
+
+" Resume program execution
+nnoremap J :action Resume<CR>
 
 " Step into
-nnoremap <leader>di :action StepInto<CR>
+nnoremap \ :action StepInto<CR>
 
 " Step out
-nnoremap <leader>do :action StepOut<CR>
+" nnoremap \ :action StepOut<CR>
 
 " Run to cursor
 nnoremap <leader>dc :action Debugger.RunToCursor<CR>
@@ -400,7 +414,9 @@ vnoremap cR :action RenameFile <CR>
 " map <leader>rm <Action>(ExtractMethod)
 " map <leader>rv <Action>(IntroduceVariable)
 " map <leader>rf <Action>(IntroduceField)
-map <leader>cs <Action>(ChangeSignature)
+" map <leader>cs <Action>(ChangeSignature)
+nnoremap cs :action ChangeSignature <CR>
+vnoremap cs :action ChangeSignature <CR>
 map <leader>qr <Action>(Refactorings.QuickListPopupAction)
 
 
