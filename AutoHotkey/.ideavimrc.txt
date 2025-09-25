@@ -145,6 +145,7 @@ nnoremap Q d$
 nnoremap H :action PreviousTab<CR>
 nnoremap L :action NextTab<CR>
 
+
 " Window navigation
 nnoremap <S-k> <C-w>k
 nnoremap <S-j> <C-w>j
@@ -188,6 +189,13 @@ nnoremap EE :action ActivateProjectToolWindow<CR>
 "find with /
 nnoremap fs :action FileStructurePopup<CR>
 nnoremap fr :action RecentFiles<CR>
+
+nnoremap tt :action PinActiveTab<CR>
+
+" nnoremap Fr :action SelectInProjectView<CR>
+
+
+
 "" Find fuzzy
 "map <Leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
 map ff <action>(com.mituuz.fuzzier.Fuzzier)
@@ -251,7 +259,10 @@ map <leader>vsp <Action>(SplitVertically)
 nmap sm <Action>(MaximizeEditorInSplit)
 nnoremap so :action MoveEditorToOppositeTabGroup<CR>
 nnoremap <leader>sc :action UnsplitAll<CR>
-nnoremap <leader>v :action NextSplitter<CR>
+"nnoremap <leader>v :action NextSplitter<CR>
+
+
+nnoremap <leader>v :action NextWindow<CR>
 
 "nnoremap  :action CloseContent<CR>
 " Use 'x' to close the current window in normal and visual mode
@@ -277,8 +288,7 @@ map <Esc> :NERDTreeClose<CR>
 "autocmd FileType nerdtree vnoremap <buffer> <Esc> :NERDTreeClose<CR>
 
 " Terminal
-"nnoremap <S-a> :action ActivateTerminalToolWindow<CR>
-nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+nnoremap T :action ActivateTerminalToolWindow<CR>
 
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
@@ -299,10 +309,10 @@ nnoremap <leader>R :action RunClass<CR>
 " =============================================================================
 " Debugging Step Actions
 " =============================================================================
-nnoremap K :action StepOver<CR>
+nnoremap N :action StepOver<CR>
 
 " Resume program execution
-nnoremap J :action Resume<CR>
+nnoremap M :action Resume<CR>
 
 " Step into
 nnoremap \ :action StepInto<CR>
