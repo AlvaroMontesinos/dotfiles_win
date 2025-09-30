@@ -41,7 +41,7 @@ RAlt & n::Send("ñ")          ; AltGr+n = ñ
 >!v::Send("{RCtrl down}{Backspace}{RCtrl up}")
 
 
-
-
+	
+#x::WinClose("A")   
 
 
