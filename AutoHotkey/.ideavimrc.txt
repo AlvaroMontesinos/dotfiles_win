@@ -13,19 +13,29 @@ set incsearch
 set ignorecase
 set smartcase
 set multiple-cursors  " <A-n>, <A-x>, <A-p>
-set clipboard+=unnamed
+" =============================================================================
+" Clipboard Operations
+" =============================================================================
+" Disable copy on selection
+"set clipboard-=autoselect
+"set clipboard-=autoselectplus
+"set clipboard-=autoselectml
+
+" System clipboard integration - yank commands will copy to system clipboard
+set clipboard-=unnamed
 set clipboard+=ideaput
+
+
 "set clipboard+=unnamed
-set ideajoin
-set ideaput
+"set ideajoin
+"set ideaput
 set relativenumber
 set number
 " ysiw"    " Surround inner word with quotes: word → "word"
 " ysip}    " Surround inner paragraph with braces
 " yss"     " Surround entire line with quotes
 set surround " Enable surround text objects (ys, cs, ds)
-set highlightedyank
-set idearefactormode=keep
+"set idearefactormode=keep
 set showmode
 set NERDTree
 " yiw         " First, yank a word (copies to register)
@@ -49,7 +59,7 @@ set commentary
 " vae    " Visual select entire file
 set textobj-entire
 set which-key
-set hlsearch
+"set hlsearch
 set foldmethod=indent
 set foldlevelstart=99
 
@@ -57,17 +67,12 @@ set foldlevelstart=99
 " Plugin Configuration
 " =============================================================================
 " Enable IdeaVim plugins
-Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/ReplaceWithRegister'
 "Plug 'justinmk/vim-sneak'
-
-" Highlightedyank settings
-let g:highlightedyank_highlight_duration = "5000"
-let g:highlightedyank_highlight_color = "rgba(57, 62, 65, 255)"
 
 " =============================================================================
 " Basic Mappings
@@ -100,7 +105,7 @@ nmap zj o<ESC>k
 nmap zk O<ESC>j
 
 " Delete inner word and enter insert mode
-nnoremap diw diwi
+"nnoremap diw diwi
 
 
 "nnoremap gl G$b
@@ -117,7 +122,11 @@ nnoremap diw diwi
 "nmap <leader>P "+P
 "vmap <leader>p "+p
 "vmap <leader>P "+P
-nnoremap yyc :action EditorDuplicate<CR>k:action CommentByLineComment<CR>j
+
+
+
+
+"nnoremap yyc :action EditorDuplicate<CR>k:action CommentByLineComment<CR>
 
 " Show copy history
 "nmap <leader>hc :action PasteMultiple<CR>
@@ -136,8 +145,7 @@ nnoremap S <C-u>zz
 vnoremap D <C-d>zz
 vnoremap S <C-u>zz
 
-nnoremap Q d$
-
+nnoremap Z d$
 
 "nnoremap <TAB> :action PreviousTab<CR>
 "nnoremap <S-TAB> :action NextTab<CR>
@@ -276,7 +284,10 @@ nnoremap <C-S-a> :action CloseAllEditors<CR>
 
 
 " Close other tabs
-nnoremap <S-x> :tabonly<CR>
+nnoremap <C-S-x> :tabonly<CR>
+" Close current tab with Ctrl+q
+nnoremap <S-q> :action CloseContent<CR>
+vnoremap <S-q> :action CloseContent<CR>
 
 
 " =============================================================================
@@ -430,8 +441,8 @@ vnoremap cR :action RenameFile <CR>
 " map <leader>rv <Action>(IntroduceVariable)
 " map <leader>rf <Action>(IntroduceField)
 " map <leader>cs <Action>(ChangeSignature)
-nnoremap cs :action ChangeSignature <CR>
-vnoremap cs :action ChangeSignature <CR>
+nnoremap cS :action ChangeSignature <CR>
+vnoremap cS :action ChangeSignature <CR>
 map <leader>qr <Action>(Refactorings.QuickListPopupAction)
 
 
@@ -555,3 +566,8 @@ nnoremap <C-w>d :action ActivateDebugToolWindow<CR>
 
 " Quick access to specific files
 nnoremap <leader>fp :action ManageRecentProjects<CR>
+
+
+" ------------ datadrip
+nnoremap <leader>se :action ExpandColumnsList<CR>
+vnoremap <leader>se :action ExpandColumnsList<CR>
