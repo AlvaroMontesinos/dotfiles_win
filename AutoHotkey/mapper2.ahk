@@ -40,7 +40,9 @@ RAlt & n::Send("ñ")          ; AltGr+n = ñ
 >!+v::Send("{RCtrl down}{Delete}{RCtrl up}")
 >!v::Send("{RCtrl down}{Backspace}{RCtrl up}")
 
-
+; Desktop switching with Ctrl+Shift+J/K
+^+j::Send("#^{Left}")        ; Ctrl+Shift+j = Switch to left desktop
+^+k::Send("#^{Right}")       ; Ctrl+Shift+k = Switch to right desktop
 	
 #x::WinClose("A")   
 
