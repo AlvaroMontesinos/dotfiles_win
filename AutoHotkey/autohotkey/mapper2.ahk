@@ -215,3 +215,19 @@ ToggleMaximize() {
 <^!j::Send("#{Down}")         ; Left Ctrl+Alt+j = Minimize/Restore window
 <^!k::Send("#{Up}")           ; Left Ctrl+Alt+k = Maximize/Restore window
 <^!l::Send("#{Right}")        ; Left Ctrl+Alt+l = Snap window to right
+
+
+
+; Mouse 
+
+MButton::Enter
+
+
+
+
+
+
+
+
+
+
