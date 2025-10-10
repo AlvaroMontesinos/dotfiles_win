@@ -165,11 +165,22 @@ FocusWindowInDirection(direction) {
     }
 }
 
+
 MoveWindowToDesktop(direction) {
     global dllPath
     
-    ; Get active window
-    hwnd := WinGetID("A")
+    ; Get active window - check if one exists first
+    try {
+        hwnd := WinGetID("A")
+    } catch {
+        ; No active window, exit silently
+        return
+    }
+    
+    ; Additional check to ensure window is valid
+    if (!hwnd || !WinExist("ahk_id " . hwnd)) {
+        return
+    }
     
     ; Get current desktop index
     currentDesktop := DllCall(dllPath . "\GetCurrentDesktopNumber", "Int")
@@ -193,6 +204,7 @@ MoveWindowToDesktop(direction) {
     DllCall(dllPath . "\GoToDesktopNumber", "Int", targetDesktop)
 }
 
+
 ToggleMaximize() {
     ; Get current window state
     try {
@@ -211,10 +223,10 @@ ToggleMaximize() {
 
 
 ; Window snapping with Ctrl+Alt+H/J/K/L (use Left Ctrl specifically)
-<^!h::Send("#{Left}")         ; Left Ctrl+Alt+h = Snap window to left
-<^!j::Send("#{Down}")         ; Left Ctrl+Alt+j = Minimize/Restore window
-<^!k::Send("#{Up}")           ; Left Ctrl+Alt+k = Maximize/Restore window
-<^!l::Send("#{Right}")        ; Left Ctrl+Alt+l = Snap window to right
+;<^!h::Send("#{Left}")         ; Left Ctrl+Alt+h = Snap window to left
+;<^!j::Send("#{Down}")         ; Left Ctrl+Alt+j = Minimize/Restore window
+;<^!k::Send("#{Up}")           ; Left Ctrl+Alt+k = Maximize/Restore window
+;<^!l::Send("#{Right}")        ; Left Ctrl+Alt+l = Snap window to right
 
 
 
