@@ -22,7 +22,7 @@ set smartcase
 "set clipboard-=autoselectml
 
 " System clipboard integration - yank commands will copy to system clipboard
-set clipboard-=unnamed
+set clipboard+=unnamed
 set clipboard+=ideaput
 
 
@@ -112,14 +112,10 @@ imap kj <ESC>
 nnoremap <C-v> <C-v>
 vnoremap <C-v> <C-v>
 
-" Add this to your .ideavimrc file
+" tab out
 inoremap <expr> <Tab> search('\%#[]>)}''"`]', 'n') ? '<Right>' : '<Tab>'
 
-"nnoremap <C-c> <Esc>
-xnoremap <Esc> <Esc>
-"xnoremap <C-c> <Esc>
-vnoremap <Esc> <Esc>
-"vnoremap <C-c> <Esc>
+
 
 " Line operations
 nmap zj o<ESC>k
@@ -134,17 +130,18 @@ nmap zk O<ESC>j
 " =============================================================================
 " Clipboard Operations
 " =============================================================================
-"vmap <leader>yiw "+yiw
-"nmap <leader>yiw "+yiw
-"vmap <leader>y "+y
-"vmap <leader>d "_d
-"nmap <leader>y "+yy
-"nmap <leader>p "+p
-"nmap <leader>P "+P
-"vmap <leader>p "+p
-"vmap <leader>P "+P
+vmap <leader>yiw "+yiw
+nmap <leader>yiw "+yiw
+vmap <leader>y "+y
+vmap <leader>d "_d
+nmap <leader>y "+yy
+nmap <leader>p "+p
+nmap <leader>p "+p
+vmap <leader>p "+p
+vmap <leader>P "+P
 
-
+nnoremap yy "+yy
+vnoremap y "+y
 
 
 "nnoremap yyc :action EditorDuplicate<CR>k:action CommentByLineComment<CR>
@@ -587,6 +584,7 @@ vnoremap <leader>se :action ExpandColumnsList<CR>
 
 " ------------- multi
 " :norm I//
+" :norm ^x or :norm ^xx
 ">> - Indent line
 "<< - Unindent line
 
