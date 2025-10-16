@@ -12,7 +12,7 @@ set scrolloff=5
 set incsearch
 set ignorecase
 set smartcase
-set multiple-cursors  " <A-n>, <A-x>, <A-p>
+"set multiple-cursors  " <A-n>, <A-x>, <A-p>
 " =============================================================================
 " Clipboard Operations
 " =============================================================================
@@ -61,7 +61,24 @@ set textobj-entire
 set which-key
 "set hlsearch
 set foldmethod=indent
-set foldlevelstart=99
+set foldlevelstart=20
+
+set ideamarks
+set ideastatusicon=gray
+
+" Multiple cursors for column selection
+set ideajoin
+
+set hlsearch
+set highlightedyank
+
+" Type: sca → jumps cursor to "ca" in "calculateTotal"I
+set sneak
+
+set which-key
+set notimeout
+
+
 
 " =============================================================================
 " Plugin Configuration
@@ -70,7 +87,7 @@ set foldlevelstart=99
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/ReplaceWithRegister'
 "Plug 'justinmk/vim-sneak'
 
@@ -90,6 +107,10 @@ noremap <SPACE> <Nop>
 " Quick escape mappings
 imap jk <ESC>
 imap kj <ESC>
+
+" Visual block mode mappings
+nnoremap <C-v> <C-v>
+vnoremap <C-v> <C-v>
 
 " Add this to your .ideavimrc file
 inoremap <expr> <Tab> search('\%#[]>)}''"`]', 'n') ? '<Right>' : '<Tab>'
@@ -193,16 +214,14 @@ map <leader>fe :action SearchEverywhere<CR>
 vnoremap // :action Find<CR>
 nnoremap // :action Find<CR>
 
-" First hide all windows, then ensure editor focus
-nnoremap EE :action ActivateProjectToolWindow<CR>
+
 "find with /
 nnoremap fs :action FileStructurePopup<CR>
 nnoremap fr :action RecentFiles<CR>
 
 nnoremap tt :action PinActiveTab<CR>
 
-" nnoremap Fr :action SelectInProjectView<CR>
-
+"nnoremap Fr :action SelectInProjectView<CR>
 
 
 "" Find fuzzy
@@ -225,6 +244,7 @@ nmap [g <Action>(VcsShowPrevChangeMarker)
 
 
 nnoremap gd :action GotoDeclaration<CR>
+nnoremap gy :action GotoTypeDeclaration<CR>
 nnoremap gc :action GotoClass<CR>
 nmap <leader>gi :action GotoSymbol<CR>
 " Use fz instead
@@ -262,7 +282,7 @@ nnoremap cpf :action EditorCodeBlockStart<CR>V:action EditorCodeBlockEnd<CR>:act
 " =============================================================================
 " Window Management
 " =============================================================================
-map <leader>su <Action>(Unsplit)
+map <leader>us <Action>(Unsplit) "su
 map <leader>hsp <Action>(SplitHorizontally)
 map <leader>vsp <Action>(SplitVertically)
 nmap sm <Action>(MaximizeEditorInSplit)
@@ -290,14 +310,7 @@ nnoremap <S-q> :action CloseContent<CR>
 vnoremap <S-q> :action CloseContent<CR>
 
 
-" =============================================================================
-" Tool Windows & UI
-" =============================================================================
-" NERDTree
-map <Esc> :NERDTreeClose<CR>
-" Close NERDTree with Escape in normal and visual mode
-"autocmd FileType nerdtree nnoremap <buffer> <Esc> :NERDTreeClose<CR>
-"autocmd FileType nerdtree vnoremap <buffer> <Esc> :NERDTreeClose<CR>
+
 
 " Terminal
 nnoremap T :action ActivateTerminalToolWindow<CR>
@@ -380,10 +393,10 @@ nmap [e <Action>(GotoPreviousError)
 " =============================================================================
 " Folding
 " =============================================================================
-nnoremap <leader>za za
-nnoremap <leader>zo zo
-map <leader>fa :action CollapseAllRegions<CR>
-map <leader>fA :action ExpandAllRegions<CR>
+"nnoremap <leader>za za
+"nnoremap <leader>zo zo
+map <leader>fa :action CollapseAllMethods<CR>
+map <leader>fA :action ExpandAllMethods<CR>
 
 
 " =============================================================================
@@ -423,9 +436,9 @@ nnoremap <leader>ch :action CallHierarchy<CR>
 nnoremap <leader>rl :action RecentLocations<CR>
 
 " Indentación
-nnoremap <leader>i= :action ReformatCode<CR>
-nnoremap <leader>io :action OptimizeImports<CR>
-vnoremap <leader>i= :action ReformatCode<CR>
+"nnoremap <leader>i= :action ReformatCode<CR>
+"nnoremap <leader>io :action OptimizeImports<CR>
+"vnoremap <leader>i= :action ReformatCode<CR>
 
 " formatting
 "nnoremap cf :action ReformatCode <CR>
@@ -449,6 +462,8 @@ map <leader>qr <Action>(Refactorings.QuickListPopupAction)
 " formatting
 nnoremap cf :action ReformatCode <CR>
 vnoremap cf :action ReformatCode <CR>
+
+
 nnoremap cr :action RenameElement <CR>
 vnoremap cr :action RenameElement <CR>
 nnoremap cR :action RenameFile <CR>
@@ -469,6 +484,7 @@ vnoremap cm :action ExtractMethod <CR>
 
 " Refactoring
 map <leader>qr <Action>(Refactorings.QuickListPopupAction)
+
 
 
 " =============================================================================
@@ -503,12 +519,6 @@ nnoremap zz :action HideAllWindows <CR>
 " Bonus: Toggle project view (useful companion mapping)
 "nnoremap <silent> <leader>ew :action ActivateProjectToolWindow<CR>
 
-
-
-
-
-
-
 " First hide all windows, then ensure editor focus
 " nnoremap <leader>we :action HideAllWindows<CR>
 
@@ -521,6 +531,9 @@ sethandler <C-V> a:ide
 sethandler <C-A> a:ide
 sethandler <C-/> a:ide
 sethandler <C-S-x> a:vm
+
+sethandler <A-Left> a:vim
+sethandler <A-Right> a:vim
 
 " new function
 
@@ -571,3 +584,64 @@ nnoremap <leader>fp :action ManageRecentProjects<CR>
 " ------------ datadrip
 nnoremap <leader>se :action ExpandColumnsList<CR>
 vnoremap <leader>se :action ExpandColumnsList<CR>
+
+" ------------- multi
+" :norm I//
+">> - Indent line
+"<< - Unindent line
+
+
+
+
+"map <Esc> :NERDTreeClose<CR>
+"
+"nnoremap EE :action ActivateProjectToolWindow<CR>
+
+nnoremap <Tab> %
+vnoremap <Tab> %
+
+
+
+" Multiple Cursors - IdeaVim Native Actions
+nnoremap <A-n> :action SelectNextOccurrence<CR>
+xnoremap <A-n> :action SelectNextOccurrence<CR>
+nnoremap <A-p> :action UnselectPreviousOccurrence<CR>
+xnoremap <A-p> :action UnselectPreviousOccurrence<CR>
+nnoremap <A-x> :action SkipOccurrence<CR>
+xnoremap <A-x> :action SkipOccurrence<CR>
+
+
+
+if has('ide')
+  if &ide =~? 'datagrip'
+      nnoremap EE :action ActivateDatabaseToolWindow<CR>
+      nnoremap <Esc> :action HideActiveWindow<CR>
+  else
+      map <Esc> :NERDTreeClose<CR>
+      nnoremap EE :action ActivateProjectToolWindow<CR>
+  endif
+else
+
+endif
+
+
+
+" =============================================================================
+" AceJump - Quick Visual Navigation (Surfingkeys/Vimium style)
+" =============================================================================
+
+" Jump to any character on screen (primary - like 'f' in Surfingkeys)
+nmap F :action AceAction<CR>
+vmap F :action AceAction<CR>
+
+" Jump to word beginning
+nmap fw :action AceWordAction<CR>
+vmap fw :action AceWordAction<CR>
+
+" Jump to line
+nmap fl :action AceLineAction<CR>
+vmap fl :action AceLineAction<CR>
+
+" Alternative: Use 's' for single character jump (if you prefer)
+" nmap s :action AceAction<CR>
+" vmap s :action AceAction<CR>
