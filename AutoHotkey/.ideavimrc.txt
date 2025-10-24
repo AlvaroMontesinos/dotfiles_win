@@ -173,10 +173,16 @@ nnoremap H :action PreviousTab<CR>
 nnoremap L :action NextTab<CR>
 
 
-" Window navigation
-nnoremap <S-k> <C-w>k
-nnoremap <S-j> <C-w>j
 
+
+
+
+" Window navigation
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 
 "fix
@@ -528,6 +534,11 @@ sethandler <C-V> a:ide
 sethandler <C-A> a:ide
 sethandler <C-/> a:ide
 sethandler <C-S-x> a:vm
+
+sethandler <C-h> a:vim
+sethandler <C-l> a:vim
+sethandler <C-j> a:vim
+sethandler <C-k> a:vim
 
 sethandler <A-Left> a:vim
 sethandler <A-Right> a:vim
