@@ -104,6 +104,8 @@ noremap <SPACE> <Nop>
 "vnoremap L $i
 "vnoremap H ^i
 
+
+
 " Quick escape mappings
 imap jk <ESC>
 imap kj <ESC>
@@ -130,19 +132,10 @@ nmap zk O<ESC>j
 " =============================================================================
 " Clipboard Operations
 " =============================================================================
-vmap <leader>yiw "+yiw
-nmap <leader>yiw "+yiw
-vmap <leader>y "+y
-vmap <leader>d "_d
-nmap <leader>y "+yy
-nmap <leader>p "+p
-nmap <leader>p "+p
-vmap <leader>p "+p
-vmap <leader>P "+P
 
+" Yankk visual mode at current cursor position
 nnoremap yy "+yy
-vnoremap y "+y
-
+vnoremap y "+ygv<esc>
 
 "nnoremap yyc :action EditorDuplicate<CR>k:action CommentByLineComment<CR>
 
@@ -309,8 +302,8 @@ nnoremap <C-S-a> :action CloseAllEditors<CR>
 " Close other tabs
 nnoremap <C-S-x> :tabonly<CR>
 " Close current tab with Ctrl+q
-nnoremap <S-q> :action CloseContent<CR>
-vnoremap <S-q> :action CloseContent<CR>
+nnoremap <S-x> :action CloseContent<CR>
+vnoremap <S-x> :action CloseContent<CR>
 
 
 
@@ -543,6 +536,11 @@ sethandler <C-k> a:vim
 sethandler <A-Left> a:vim
 sethandler <A-Right> a:vim
 
+
+
+sethandler <C-u> a:vim
+sethandler <C-u> a:vim
+
 " new function
 
 nnoremap su :action ShowUsages<CR>
@@ -609,6 +607,15 @@ vnoremap <leader>se :action ExpandColumnsList<CR>
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+
+" Change operations don't yank
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
+
+" Regular delete still yanks (for d-then-p workflows)
+" But you can use <leader>d for black hole delete
 
 
 " Multiple Cursors - IdeaVim Native Actions
