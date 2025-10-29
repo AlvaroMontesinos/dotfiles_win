@@ -105,6 +105,9 @@ noremap <SPACE> <Nop>
 "vnoremap H ^i
 
 
+" Keep cursor position when exiting visual mode
+vnoremap <Esc> <Esc>`>
+
 
 " Quick escape mappings
 imap jk <ESC>
@@ -132,7 +135,6 @@ nmap zk O<ESC>j
 " =============================================================================
 " Clipboard Operations
 " =============================================================================
-
 " Yankk visual mode at current cursor position
 nnoremap yy "+yy
 vnoremap y "+ygv<esc>
@@ -633,7 +635,8 @@ if has('ide')
       nnoremap EE :action ActivateDatabaseToolWindow<CR>
       nnoremap <Esc> :action HideActiveWindow<CR>
   else
-      map <Esc> :NERDTreeClose<CR>
+      nnoremap <Esc> :NERDTreeClose<CR>
+      "map <Esc> :NERDTreeClose<CR>
       nnoremap EE :action ActivateProjectToolWindow<CR>
   endif
 else
