@@ -29,12 +29,18 @@ RAlt & l::Send("{Right}")    ; AltGr+l = →
 RAlt & m::Send("@")
 ; esp dist
 RAlt & n::Send("ñ")          ; AltGr+n = ñ
-#x::WinClose("A")   
+#x::WinClose("A") 
+  
 ; delete like vim 
 >!x::Send("{Delete}")
 >!+x::Send("{Backspace}")
 >!+v::Send("{RCtrl down}{Delete}{RCtrl up}")
 >!v::Send("{RCtrl down}{Backspace}{RCtrl up}")
+LAlt & Backspace::Send("{Delete}")
+
+; Ctrl+Delete = Supr (Delete key)
+<!Backspace::Send("{Ctrl down}{Backspace}{Ctrl up}")
+
 ; Desktop switching with Ctrl+Shift+J/K
 ^+j::Send("#^{Left}")        ; Ctrl+Shift+j = Switch to left desktop
 ^+k::Send("#^{Right}")       ; Ctrl+Shift+k = Switch to right desktop
