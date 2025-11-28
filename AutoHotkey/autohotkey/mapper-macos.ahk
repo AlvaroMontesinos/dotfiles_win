@@ -18,17 +18,22 @@ Escape::CapsLock         ; Escape = Caps Lock
 
 
 ; QWERTY Row with RAlt
-RAlt & q::Send("!{F4}")      ; AltGr+q = Alt+F4 (close window)
+; RAlt & q::Send("!{F4}")      ; AltGr+q = Alt+F4 (close window)
+^q::Send("!{F4}")   ; AltGr+q = Alt+F4 (close window)
+
+
 RAlt & w::Send("``")         ; AltGr+w = `
 RAlt & e::Send("{%}")        ; AltGr+e = %
-RAlt & r::SendText("+")      ; AltGr+r = +
+;-------------- RAlt & r::SendText("+")      ; AltGr+r = +
+RAlt & r::SendText("{")      ; AltGr+r = {
 RAlt & t::Send("$")          ; AltGr+t = $
 ; ASDF Row - Left-hand operators
 RAlt & a::Send("=")          ; AltGr+a = =
 RAlt & s::Send("-")          ; AltGr+s = -
-RAlt & d::Send("_")          ; AltGr+d = _
-RAlt & f::Send("(")          ; AltGr+f = (
-RAlt & g::SendText("{")      ; AltGr+g = {
+; --------------RAlt & d::Send("-")          ; AltGr+d = _
+RAlt & d::Send("{Backspace}") 
+RAlt & f::Send("_")          ; AltGr+f = _
+RAlt & g::SendText("+")      ; AltGr+g = +
 ; Navigation keys (HJKL Vim-style) - These stay with RAlt
 RAlt & h::Send("{Left}")     ; AltGr+h = ←
 RAlt & j::Send("{Down}")     ; AltGr+j = ↓
@@ -40,7 +45,10 @@ RAlt & n::Send("ñ")          ; AltGr+n = ñ
 #x::WinClose("A") 
 
 
- 
+^d::Send("{Backspace}")     ; Ctrl+d = Backspace
+;^e::Send("{Enter}")          ; Ctrl+e = Enter
+
+
 >!x::Send("{Delete}")
 >!+x::Send("{Backspace}")
 >!+v::Send("{RCtrl down}{Delete}{RCtrl up}")
@@ -57,8 +65,10 @@ RAlt & n::Send("ñ")          ; AltGr+n = ñ
 ^+u::MoveWindowToDesktop(-1)  ; Move window to previous desktop
 ^+i::MoveWindowToDesktop(1)   ; Move window to next desktop
 
-^+n::WinMinimize("A")        ; Ctrl+Shift+n = Minimize active window
-^+m::ToggleMaximize()        ; Ctrl+Shift+m = Toggle maximize/restore active window
+
+^m::WinMinimize("A")     ; Ctrl+m = Minimize active window
+;^h::WinHide("A")     ; Ctrl+h = Hide active window
+^!f::ToggleMaximize()     ; Ctrl+Alt+f = Toggle maximize
 
 
 ; Function to check if a window is truly visible (not minimized, not behind other windows)
@@ -237,12 +247,107 @@ ToggleMaximize() {
 
 
 
+^Space::Send("!{Space}")
+
+
+
+^+z::Send("^y")     ; Ctrl+Shift+z = Ctrl+Y 
+
+
+; macos
+
+^Tab::Send("!{Tab}")        ; Ctrl+Tab = Alt+Tab (cambiar ventanas)
 
 
 
 
 
+; macOS-style window cycling - Cycle through windows of current app only
+; LCtrl+Tab (physically LAlt+Tab since keys are swapped)
 
+
+^n::Run("explorer.exe")     ; Ctrl+n = Open File Explorer
+
+
+^!q::DllCall("LockWorkStation")     ; Ctrl+Alt+q = Lock screen
+
+
+;!SC033::Run("ms-settings:")     ; Alt+, = Open Windows Settings
+
+
+^,::Run("ms-settings:")     ; Ctrl+, = Open Windows Settings
+
+
+
+
+; Window positioning (macOS-style Control + Option + arrows)
+^!h::SnapWindowLeft()        ; Ctrl+Alt+h = Snap to left half
+^!l::SnapWindowRight()       ; Ctrl+Alt+l = Snap to right half
+
+;^!k::ToggleMaximize()        ; Ctrl+Alt+k = Maximize/Restore
+;^!j::WinMinimize("A")        ; Ctrl+Alt+j = Minimize
+
+; Window corners (quarters)
+^!u::SnapWindowCorner("topleft")       ; Ctrl+Alt+u = Top-left corner
+^!i::SnapWindowCorner("topright")      ; Ctrl+Alt+i = Top-right corner
+^!n::SnapWindowCorner("bottomleft")    ; Ctrl+Alt+n = Bottom-left corner
+^!m::SnapWindowCorner("bottomright")   ; Ctrl+Alt+m = Bottom-right corner
+
+; Function to snap window to left half of screen
+SnapWindowLeft() {
+    try {
+        WinRestore("A")  ; Restore if maximized
+        MonitorGetWorkArea(, &left, &top, &right, &bottom)
+        width := (right - left) // 2
+        height := bottom - top
+        WinMove(left, top, width, height, "A")
+    }
+}
+
+; Function to snap window to right half of screen
+SnapWindowRight() {
+    try {
+        WinRestore("A")  ; Restore if maximized
+        MonitorGetWorkArea(, &left, &top, &right, &bottom)
+        width := (right - left) // 2
+        height := bottom - top
+        startX := left + width
+        WinMove(startX, top, width, height, "A")
+    }
+}
+
+; Function to snap window to corners (quarters)
+SnapWindowCorner(corner) {
+    try {
+        WinRestore("A")  ; Restore if maximized
+        MonitorGetWorkArea(, &left, &top, &right, &bottom)
+        width := (right - left) // 2
+        height := (bottom - top) // 2
+        
+        switch corner {
+            case "topleft":
+                WinMove(left, top, width, height, "A")
+            case "topright":
+                WinMove(left + width, top, width, height, "A")
+            case "bottomleft":
+                WinMove(left, top + height, width, height, "A")
+            case "bottomright":
+                WinMove(left + width, top + height, width, height, "A")
+        }
+    }
+}
+
++WheelUp:: {
+    ; Cambiar al escritorio anterior
+    DllCall(dllPath . "\GoToDesktopNumber"
+        , "Int", DllCall(dllPath . "\GetCurrentDesktopNumber") - 1)
+}
+
++WheelDown:: {
+    ; Cambiar al escritorio siguiente
+    DllCall(dllPath . "\GoToDesktopNumber"
+        , "Int", DllCall(dllPath . "\GetCurrentDesktopNumber") + 1)
+}
 
 
 
