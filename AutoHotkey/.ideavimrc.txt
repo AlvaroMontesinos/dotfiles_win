@@ -25,6 +25,9 @@ set smartcase
 set clipboard+=unnamed
 set clipboard+=ideaput
 
+" Make the default register '+' for yank
+let @* = @+
+let @" = @+
 
 "set clipboard+=unnamed
 "set ideajoin
@@ -76,7 +79,11 @@ set highlightedyank
 set sneak
 
 set which-key
-set notimeout
+
+
+
+"set notimeout rompe prefijos (g, z, [)
+"set notimeout
 
 
 
@@ -172,6 +179,8 @@ nnoremap L :action NextTab<CR>
 
 
 
+
+
 " Window navigation
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
@@ -203,10 +212,14 @@ nnoremap [[ :action MethodUp<CR>
 "vmap <leader>fp :action FindInPath<CR>
 
 " Find in project
-nmap /fp :action FindInPath<CR>
-vmap /fp :action FindInPath<CR>
+nmap /f :action FindInPath<CR>
+vmap /f :action FindInPath<CR>
 
-map <leader>fe :action SearchEverywhere<CR>
+map <leader>fe :action SearchEverywhere<CR> ff
+"map <leader>ff :action FindFiles<CR>
+map <leader>ff :action GotoFile<CR>
+
+
 
 
 vnoremap // :action Find<CR>
@@ -225,9 +238,11 @@ nnoremap tt :action PinActiveTab<CR>
 "" Find fuzzy
 "map <Leader>gf <action>(com.mituuz.fuzzier.FuzzierVCS)
 map ff <action>(com.mituuz.fuzzier.Fuzzier)
+
+
 "map <Leader>mf <action>(com.mituuz.fuzzier.FuzzyMover)
 map fvc <action>(com.mituuz.fuzzier.FuzzierVCS)
-map <Leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
+"map <Leader>fg <action>(com.mituuz.fuzzier.FuzzyGrep)
 
 " =============================================================================
 " Code Navigation & Information
@@ -249,7 +264,7 @@ nmap <leader>gi :action GotoSymbol<CR>
 " nnoremap <leader>gf :action GotoFile<CR>
 nnoremap gt :action GotoTest<CR>
 " Code information
-nnoremap <leader>i :action ShowHoverInfo<CR>
+"nnoremap <leader>i :action ShowHoverInfo<CR>
 nnoremap <leader>d :action ShowErrorDescription<CR>
 nnoremap <leader>pi :action ParameterInfo<CR>
 nmap qd <Action>(QuickJavaDoc)
@@ -312,6 +327,8 @@ vnoremap <S-x> :action CloseContent<CR>
 
 " Terminal
 nnoremap T :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>T :action HideActiveWindow<CR>
+
 
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
@@ -435,7 +452,7 @@ nnoremap <leader>rl :action RecentLocations<CR>
 
 " Indentación
 "nnoremap <leader>i= :action ReformatCode<CR>
-"nnoremap <leader>io :action OptimizeImports<CR>
+nnoremap <leader>i :action OptimizeImports<CR>
 "vnoremap <leader>i= :action ReformatCode<CR>
 
 " formatting
@@ -460,6 +477,10 @@ map <leader>qr <Action>(Refactorings.QuickListPopupAction)
 " formatting
 nnoremap cf :action ReformatCode <CR>
 vnoremap cf :action ReformatCode <CR>
+
+nnoremap cF :action ReformatWithPrettierAction<CR>
+vnoremap cF :action ReformatWithPrettierAction<CR>
+
 
 
 nnoremap cr :action RenameElement <CR>
@@ -545,7 +566,8 @@ sethandler <C-u> a:vim
 
 " new function
 
-nnoremap su :action ShowUsages<CR>
+"nnoremap su :action ShowUsages<CR>
+nnoremap U :action ShowUsages<CR>
 nnoremap <leader>hi :action HighlightUsagesInFile<CR>
 
 
@@ -616,6 +638,13 @@ vnoremap c "_c
 nnoremap C "_C
 vnoremap C "_C
 
+" Paste and add blank line below
+nnoremap p pO<Esc>j
+
+" Paste and add blank line below
+nnoremap p pO<Esc>j
+
+
 " Regular delete still yanks (for d-then-p workflows)
 " But you can use <leader>d for black hole delete
 
@@ -635,14 +664,15 @@ if has('ide')
       nnoremap EE :action ActivateDatabaseToolWindow<CR>
       nnoremap <Esc> :action HideActiveWindow<CR>
   else
-      nnoremap <Esc> :NERDTreeClose<CR>
-      "map <Esc> :NERDTreeClose<CR>
+      " Combinar ambas acciones en un solo mapeo
+      nnoremap <Esc> :NERDTreeClose<CR>:action HideActiveWindow<CR>
       nnoremap EE :action ActivateProjectToolWindow<CR>
   endif
 else
-
+  " Configuración para Vim normal si la necesitas
 endif
 
+" Terminal: Hide with Esc when focused
 
 
 " =============================================================================
@@ -664,3 +694,11 @@ vmap fl :action AceLineAction<CR>
 " Alternative: Use 's' for single character jump (if you prefer)
 " nmap s :action AceAction<CR>
 " vmap s :action AceAction<CR>
+
+
+" git
+" Ver historial git del archivo actual
+nnoremap <leader>gh :action Vcs.ShowTabbedFileHistory<CR>
+
+" Alternativa más corta (git log)
+nnoremap gl :action Vcs.ShowTabbedFileHistory<CR>

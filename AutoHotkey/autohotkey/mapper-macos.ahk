@@ -30,10 +30,10 @@ RAlt & t::Send("$")          ; AltGr+t = $
 ; ASDF Row - Left-hand operators
 RAlt & a::Send("=")          ; AltGr+a = =
 RAlt & s::Send("-")          ; AltGr+s = -
-; --------------RAlt & d::Send("-")          ; AltGr+d = _
-RAlt & d::Send("{Backspace}") 
-RAlt & f::Send("_")          ; AltGr+f = _
-RAlt & g::SendText("+")      ; AltGr+g = +
+RAlt & d::Send("_")          ; AltGr+d = _
+;RAlt & d::Send("{Backspace}") 
+RAlt & f::Send("+")          ; AltGr+f = _
+RAlt & g::SendText("0")      ; AltGr+g = +
 ; Navigation keys (HJKL Vim-style) - These stay with RAlt
 RAlt & h::Send("{Left}")     ; AltGr+h = ←
 RAlt & j::Send("{Down}")     ; AltGr+j = ↓
