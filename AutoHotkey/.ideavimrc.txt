@@ -160,10 +160,14 @@ vnoremap y "+ygv<esc>
 "vmap <leader>d <C-d>
 "vmap <leader>u <C-u>
 " Scroll down (half page) and center - using different key since D is for delete
-nnoremap D <C-d>zz
-nnoremap S <C-u>zz
-vnoremap D <C-d>zz
-vnoremap S <C-u>zz
+" Media pantalla con centrado (atajos originales)
+nnoremap <C-u> <C-u>zz
+vnoremap <C-u> <C-u>zz
+
+
+nnoremap <C-d> <C-d>zz
+vnoremap <C-d> <C-d>zz
+
 
 nnoremap Z d$
 
@@ -531,7 +535,9 @@ nmap [b <Action>(GotoPreviousBookmark)
 
 " Show all bookmarks
 "nmap <leader>sb :action ShowBookmarks<CR>
-nmap Bs :action ShowBookmarks<CR>
+" nmap Bs :action ShowBookmarks<CR>
+nmap ml :action ShowBookmarks<CR>
+
 
 "nnoremap <leader>ww :action HideAllWindows <CR>
 nnoremap zz :action HideAllWindows <CR>
@@ -562,7 +568,8 @@ sethandler <A-Right> a:vim
 
 
 sethandler <C-u> a:vim
-sethandler <C-u> a:vim
+sethandler <C-d> a:vim
+
 
 " new function
 
@@ -661,12 +668,14 @@ xnoremap <A-x> :action SkipOccurrence<CR>
 
 if has('ide')
   if &ide =~? 'datagrip'
-      nnoremap EE :action ActivateDatabaseToolWindow<CR>
+      "nnoremap EE :action ActivateDatabaseToolWindow<CR>
+      nnoremap E :action ActivateDatabaseToolWindow<CR>
       nnoremap <Esc> :action HideActiveWindow<CR>
   else
       " Combinar ambas acciones en un solo mapeo
       nnoremap <Esc> :NERDTreeClose<CR>:action HideActiveWindow<CR>
-      nnoremap EE :action ActivateProjectToolWindow<CR>
+      " nnoremap EE :action ActivateProjectToolWindow<CR>
+      nnoremap E :action ActivateProjectToolWindow<CR>
   endif
 else
   " Configuración para Vim normal si la necesitas
@@ -702,3 +711,11 @@ nnoremap <leader>gh :action Vcs.ShowTabbedFileHistory<CR>
 
 " Alternativa más corta (git log)
 nnoremap gl :action Vcs.ShowTabbedFileHistory<CR>
+
+
+
+
+
+nnoremap <C-s> :action ReformatCode<CR>:action SaveAll<CR>
+vnoremap <C-s> :action ReformatCode<CR>:action SaveAll<CR>
+inoremap <C-s> <Esc>:action ReformatCode<CR>:action SaveAll<CR>a

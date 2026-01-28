@@ -44,8 +44,8 @@ RAlt & m::Send("@")
 RAlt & n::Send("ñ")          ; AltGr+n = ñ
 #x::WinClose("A") 
 
-
-^d::Send("{Backspace}")     ; Ctrl+d = Backspace
+; not use with idea vim ^d
+; ^d::Send("{Backspace}")     ; Ctrl+d = Backspace
 ;^e::Send("{Enter}")          ; Ctrl+e = Enter
 
 
