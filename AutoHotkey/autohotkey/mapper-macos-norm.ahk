@@ -350,6 +350,11 @@ SnapWindowCorner(corner) {
 }
 
 
+#HotIf WinActive("ahk_class CabinetWClass")
 
++h::Send("!{Left}")      ; Shift+h = Back
++l::Send("!{Right}")     ; Shift+l = Forward
+
+#HotIf
 
 
